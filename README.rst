@@ -101,7 +101,7 @@ The immediate neighborhood of sqlite:
 
 Everything in between sqlite and ncurses:
 
-.. code:block:: console
+.. code-block:: console
 
    $ conda depgraph --name base out sqlite in ncurses
 
@@ -124,7 +124,7 @@ Everything in between sqlite and ncurses:
 
 A list of the direct dependencies of Python, plus Python itself:
 
-.. code:block:: console
+.. code-block:: console
 
    $ conda depgraph --name base --names-only out --distance=1 python
 
@@ -144,7 +144,7 @@ A list of the direct dependencies of Python, plus Python itself:
 
 A list of all packages that require Python, plus Python itself:
 
-.. code:block:: console
+.. code-block:: console
 
    $ conda depgraph --name base --names-only in --distance=1 python
 
@@ -190,7 +190,7 @@ A list of all packages that require Python, plus Python itself:
 
 Use data from cached channels:
 
-.. code:block:: console
+.. code-block:: console
 
    $ conda depgraph --from-channels out --distance=1 jupyter
 
