@@ -1,0 +1,38 @@
+package:
+  name: conda-depgraph
+  version: 1.0.0
+
+about:
+  home: https://github.com/omegacen/conda-depgraph
+  license: LGPL
+  license_file: LICENSE
+  summary: A command-line utility to plot Conda dependency graphs.
+
+source:
+  - path: ../src
+    folder: src
+  - path: ../LICENSE
+
+requirements:
+  run:
+    - python>=3.6
+    - asciinet
+    - click
+    - conda
+    - networkx
+
+build:
+  noarch: python
+  script:
+    - mkdir -p ${SP_DIR}
+    - cp -r src/* ${SP_DIR}
+  entry_points:
+    - conda-depgraph = conda_depgraph.cli:main
+
+test:
+  imports:
+    - conda_depgraph
+    - asciinet
+  commands:
+    - conda depgraph --help
+    - conda depgraph out conda-depgraph in asciinet
