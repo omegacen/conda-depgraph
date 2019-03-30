@@ -8,20 +8,21 @@ A command-line utility to plot Conda dependency graphs.
 Installation
 ============
 
-I recommend installing ``conda-depgraph`` in its own environment:
+It is recommended to install ``conda-depgraph`` in its own environment:
 
 .. code-block:: console
 
    $ conda create -n depgraph -c omegacen conda-depgraph
-   $ conda activate depgraph
 
-Installing it in the ``base`` environment might work but I haven't tested it.
+Installing it in the ``base`` environment will work, but then you'll have to
+be sure that ``java`` is available in ``$PATH``.
 
 
 Usage
 =====
 
-After installation, a new Conda command, ``depgraph``, is available:
+After installation and activation of the environment, a new Conda command is
+available:
 
 .. code-block:: console
 
@@ -126,7 +127,7 @@ A list of the direct dependencies of Python, plus Python itself:
 
 .. code-block:: console
 
-   $ conda depgraph --name base --names-only out --distance=1 python
+   $ conda depgraph --name base --output-names out --distance=1 python
 
 ::
 
@@ -146,7 +147,7 @@ A list of all packages that require Python, plus Python itself:
 
 .. code-block:: console
 
-   $ conda depgraph --name base --names-only in --distance=1 python
+   $ conda depgraph --name base --output-names in --distance=1 python
 
 ::
 
