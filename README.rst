@@ -80,7 +80,7 @@ The immediate neighborhood of sqlite:
 
 .. code-block:: console
 
-   $ conda depgraph --name=base inoutgraph -distance==1 sqlite
+   $ conda depgraph --name=base inoutgraph --distance==1 sqlite
 
 ::
 
