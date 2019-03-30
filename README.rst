@@ -8,21 +8,28 @@ A command-line utility to plot Conda dependency graphs.
 Installation
 ============
 
-It is recommended to install ``conda-depgraph`` in its own environment:
+``conda-depgraph`` can be installed as follows:
 
 .. code-block:: console
 
-   $ conda create -n depgraph -c omegacen conda-depgraph
+   $ conda install -c omegacen conda-depgraph
 
-Installing it in the ``base`` environment will work, but then you'll have to
-be sure that ``java`` is available in ``$PATH``.
+It can either be installed into its own conda environment, or into the base
+environment.
+
+Installing it in the base environment has the benefit that the
+``conda depgraph`` command is available in all other environments. However,
+you will have to make sure that ``java`` is available on ``$PATH``.
+
+Installing it in its own environment automatically ensures it can find ``java``,
+but then you will have to activate that environment before you can run
+``conda depgraph``.
 
 
 Usage
 =====
 
-After installation and activation of the environment, a new Conda command is
-available:
+After installation a new Conda command is available:
 
 .. code-block:: console
 
@@ -35,9 +42,9 @@ available:
                     [inout [--distance=<DISTANCE>] <PACKAGE>]
 
 ``depgraph`` can  plot dependency graphs from either cached repository data,
-or from an existing Conda environment. If the target environment is not
-specified via either ``--name`` or ``--prefix``, the current environment is
-used.
+or from an existing Conda environment. The latter is the default behaviour. If
+the target environment is not specified via either ``--name`` or ``--prefix``,
+the current environment is used.
 
 The subcommands (``in``, ``out``, ``inout``) restrict the output to a subgraph
 of the full dependency graph of the environment. They can be arbitrarily nested.
@@ -50,7 +57,7 @@ The direct dependencies of conda:
 
 .. code-block:: console
 
-   $ conda depgraph --name=base outgraph --distance=1 conda
+   $ conda depgraph --name=base out --distance=1 conda
 
 ::
 
@@ -80,7 +87,7 @@ The immediate neighborhood of sqlite:
 
 .. code-block:: console
 
-   $ conda depgraph --name=base inoutgraph --distance==1 sqlite
+   $ conda depgraph --name=base inout --distance==1 sqlite
 
 ::
 

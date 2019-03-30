@@ -1,0 +1,2 @@
+class DepgraphValueError(ValueError):
+    pass

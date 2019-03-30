@@ -1,11 +1,22 @@
 import json
 import os
+import pathlib
 import subprocess
-from pathlib import Path
+import sys
 
 import conda
 import conda.exports
-from networkx import DiGraph
+import networkx
+
+from . import exceptions
+
+
+def locate_prefix(name, prefix):
+    if name is not None:
+        prefix = locate_prefix_by_name(name)
+    if prefix is None:
+        prefix = os.environ.get('CONDA_PREFIX', sys.prefix)
+    return prefix
 
 
 def locate_prefix_by_name(name):
@@ -25,13 +36,14 @@ def locate_prefix_by_name(name):
                 name=name, envs_dirs=info['envs_dirs']
             )
         except conda.exceptions.EnvironmentNameNotFound:
-            prefix = None
+            msg = f"Could not find Conda environment '{name}'."
+            raise exceptions.DepgraphValueError(msg)
     return prefix
 
 
 def channelcache_graph():
     prefix = _conda_execute('info', '--base')
-    cache_dir = Path(prefix) / 'pkgs' / 'cache'
+    cache_dir = pathlib.Path(prefix) / 'pkgs' / 'cache'
 
     def package_data():
         for cache_file in cache_dir.glob('*.json'):
@@ -53,7 +65,7 @@ def _conda_execute(*args):
 
 
 def _package_datas_to_graph(datas):
-    g = DiGraph()
+    g = networkx.DiGraph()
     for data in datas:
         for p in data.values():
             n = p['name']

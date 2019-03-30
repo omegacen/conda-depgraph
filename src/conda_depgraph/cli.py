@@ -1,11 +1,11 @@
 import functools
-import sys
 
 import click
 from asciinet import graph_to_ascii
 
 from . import algorithms
 from . import conda_facade
+from . import exceptions
 
 
 @click.group(chain=True, invoke_without_command=True)
@@ -30,13 +30,10 @@ def main(*_, **__):
 def process_subcommands(subcommands, from_where, prefix, name, output):
 
     if from_where == 'env':
-        if name is not None:
-            prefix = conda_facade.locate_prefix_by_name(name)
-            if prefix is None:
-                msg = f"Could not find Conda environment '{name}'."
-                raise click.BadParameter(msg)
-        if prefix is None:
-            prefix = sys.prefix
+        try:
+            prefix = conda_facade.locate_prefix(name, prefix)
+        except exceptions.DepgraphValueError as e:
+            raise click.BadParameter(e.args)
         g = conda_facade.env_graph(prefix)
     else:
         g = conda_facade.channelcache_graph()
