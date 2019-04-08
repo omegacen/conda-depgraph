@@ -5,6 +5,42 @@ conda-depgraph
 A command-line utility to plot Conda dependency graphs.
 
 
+About
+=====
+
+Visualizing the dependency graph of Conda packages comes in handy for
+understanding why a parcticular package is installed. ``conda-depgraph``
+plots the graph on the command line, so there's no need to fire up a Jupyter
+notebook.
+
+For example, listing all the packages that (indirectly) depend on MKL in a
+particular environment is as easy as
+
+.. code-block:: console
+
+   $ conda depgraph in mkl
+
+::
+
+   ┌──────────┐ ┌──────┐
+   │matplotlib│ │pyfits│
+   └─┬────────┘ └───┬──┘
+     │              │
+     │ ┌────────────┘
+     │ │
+     v v
+   ┌─────┐ ┌──────────┐
+   │numpy│ │numpy-base│
+   └──┬──┘ └─┬────────┘
+      │      │
+      └────┐ │
+           │ │
+           v v
+         ┌─────┐
+         │ mkl │
+         └─────┘
+
+
 Installation
 ============
 
@@ -47,7 +83,8 @@ the target environment is not specified via either ``--name`` or ``--prefix``,
 the current environment is used.
 
 The subcommands (``in``, ``out``, ``inout``) restrict the output to a subgraph
-of the full dependency graph of the environment. They can be arbitrarily nested.
+of the full dependency graph of the environment. The subcommands can be
+arbitrarily nested to iteratively restrict the output graph.
 
 
 Examples
