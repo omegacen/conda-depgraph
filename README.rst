@@ -286,7 +286,7 @@ Use data from cached channels:
                    └───────────────┘
 
 
-Similiar projects
+Similar projects
 =================
 
 * https://github.com/rvalieris/conda-tree
