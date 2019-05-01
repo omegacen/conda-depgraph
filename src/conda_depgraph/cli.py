@@ -1,6 +1,7 @@
 import functools
 
 import click
+import networkx
 from asciinet import graph_to_ascii
 
 from . import algorithms
@@ -19,6 +20,8 @@ from . import exceptions
               help='Name of environment.')
 @click.option('--output-names', 'output', flag_value='names',
               help='Don\'t plot a graph but only return package names.')
+@click.option('--output-graphml', 'output', flag_value='graphml',
+              help='Return a GraphML representation of the graph.')
 @click.option('--output-graph', 'output', flag_value='graph', default=True,
               help='Plot a graph (default).')
 def main(*_, **__):
@@ -44,6 +47,9 @@ def process_subcommands(subcommands, from_where, prefix, name, output):
     if output == 'names':
         for n in sorted(g.nodes()):
             print(n)
+    elif output == 'graphml':
+        for line in networkx.generate_graphml(g):
+            print(line)
     else:
         print(graph_to_ascii(g))
 

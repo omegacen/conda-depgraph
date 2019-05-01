@@ -1,6 +1,6 @@
 package:
   name: conda-depgraph
-  version: 1.0.1
+  version: 1.1.0
 
 about:
   home: https://github.com/omegacen/conda-depgraph

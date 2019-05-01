@@ -72,7 +72,7 @@ After installation a new Conda command is available:
    $ conda depgraph [--help]
                     [--from-channels]
                     [--from-env [--name=<ENV_NAME>] [--prefix=<ENV_PATH>]]
-                    [--output-names] [--output-graph]
+                    [--output-names] [--output-graph] [--output-graphml]
                     [in [--distance=<DISTANCE>] <PACKAGE>]
                     [out [--distance=<DISTANCE>] <PACKAGE>]
                     [inout [--distance=<DISTANCE>] <PACKAGE>]
