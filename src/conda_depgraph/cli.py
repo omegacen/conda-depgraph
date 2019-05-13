@@ -1,12 +1,11 @@
 import functools
 
 import click
-import networkx
-from asciinet import graph_to_ascii
 
 from . import algorithms
 from . import conda_facade
 from . import exceptions
+from . import outputs
 
 
 @click.group(chain=True, invoke_without_command=True)
@@ -35,8 +34,8 @@ def process_subcommands(subcommands, from_where, prefix, name, output):
     if from_where == 'env':
         try:
             prefix = conda_facade.locate_prefix(name, prefix)
-        except exceptions.DepgraphValueError as e:
-            raise click.BadParameter(e.args)
+        except exceptions.InputError as e:
+            raise click.BadParameter(*e.args)
         g = conda_facade.env_graph(prefix)
     else:
         g = conda_facade.channelcache_graph()
@@ -45,13 +44,18 @@ def process_subcommands(subcommands, from_where, prefix, name, output):
         g = s(g)
 
     if output == 'names':
-        for n in sorted(g.nodes()):
-            print(n)
+        of = outputs.to_names
     elif output == 'graphml':
-        for line in networkx.generate_graphml(g):
-            print(line)
+        of = outputs.to_graphml
     else:
-        print(graph_to_ascii(g))
+        of = outputs.to_ascii
+
+    try:
+        o = of(g)
+    except exceptions.RenderError as e:
+        raise click.ClickException(*e.args)
+    for l in o:
+        print(l)
 
 
 def subcommand(f):

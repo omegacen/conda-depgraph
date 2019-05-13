@@ -36,3 +36,5 @@ test:
   commands:
     - conda depgraph --help
     - conda depgraph out conda-depgraph in asciinet
+    - conda depgraph --from-channels --output-graphml out -d 1 conda
+    - conda depgraph --output-names in -d 1 conda

@@ -37,7 +37,7 @@ def locate_prefix_by_name(name):
             )
         except conda.exceptions.EnvironmentNameNotFound:
             msg = f"Could not find Conda environment '{name}'."
-            raise exceptions.DepgraphValueError(msg)
+            raise exceptions.InputError(msg)
     return prefix
 
 
