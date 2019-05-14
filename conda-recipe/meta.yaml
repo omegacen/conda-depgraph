@@ -11,6 +11,8 @@ about:
 source:
   - path: ../src
     folder: src
+  - path: ../tests
+    folder: tests
   - path: ../LICENSE
 
 requirements:
@@ -30,11 +32,19 @@ build:
     - conda-depgraph = conda_depgraph.cli:main
 
 test:
+  requires:
+    - pytest
+    - pytest-cov
+    - pytest-console-scripts
+  source_files:
+    - tests/*.py
   imports:
     - conda_depgraph
     - asciinet
   commands:
-    - conda depgraph --help
-    - conda depgraph out conda-depgraph in asciinet
-    - conda depgraph --from-channels --output-graphml out -d 1 conda
-    - conda depgraph --output-names in -d 1 conda
+    - pytest
+        -p pytest_console_scripts
+        --cov=${SP_DIR}/conda_depgraph
+        --cov-report term-missing
+        --script-launch-mode=subprocess
+        tests/
