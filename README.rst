@@ -48,7 +48,7 @@ Installation
 
 .. code-block:: console
 
-   $ conda install -c omegacen conda-depgraph
+   $ conda install -n base -c omegacen conda-depgraph
 
 It can either be installed into its own conda environment, or into the base
 environment.
