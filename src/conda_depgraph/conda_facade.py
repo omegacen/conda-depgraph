@@ -72,5 +72,11 @@ def _package_datas_to_graph(datas):
             g.add_node(n)
             for d in p.get('depends', []):
                 o, *_ = d.split(' ')
-                g.add_edge(n, o)
+
+                # Break the circular dependency between python and pip.
+                # Otherwise, pip appears as a dependency of every python package.
+                # FWIW, conda's own toposort does the same thing:
+                # https://github.com/conda/conda/blob/e9a5056/conda/common/toposort.py#L101-L109
+                if (n, o) != ('python', 'pip'):
+                    g.add_edge(n, o)
     return g
