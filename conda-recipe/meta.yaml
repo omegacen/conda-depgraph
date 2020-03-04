@@ -1,6 +1,6 @@
 package:
   name: conda-depgraph
-  version: 1.1.1
+  version: 1.2.0
 
 about:
   home: https://github.com/omegacen/conda-depgraph
@@ -43,7 +43,6 @@ test:
     - asciinet
   commands:
     - pytest
-        -p pytest_console_scripts
         --cov=${SP_DIR}/conda_depgraph
         --cov-report term-missing
         --script-launch-mode=subprocess

@@ -179,7 +179,6 @@ A list of the direct dependencies of Python, plus Python itself:
    libffi
    ncurses
    openssl
-   pip
    python
    readline
    sqlite
