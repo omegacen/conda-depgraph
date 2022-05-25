@@ -12,14 +12,16 @@ def test_nonsense_package(script_runner):
     ret = script_runner.run('conda-depgraph', 'out', 'asdfasdfasdf')
     assert not ret.success
     assert ret.stdout == ''
-    assert len(ret.stderr.splitlines()) == 3
+    assert len(ret.stderr.splitlines()) in (3, 4)
+    assert "Package 'asdfasdfasdf' is not in the dependency graph" in ret.stderr
 
 
 def test_nonsense_env(script_runner):
     ret = script_runner.run('conda-depgraph', '--name', 'asdfasdfasdf')
     assert not ret.success
     assert ret.stdout == ''
-    assert len(ret.stderr.splitlines()) == 3
+    assert len(ret.stderr.splitlines()) in (3, 4)
+    assert "Could not find Conda environment 'asdfasdfasdf'" in ret.stderr
 
 
 def test_timeout(script_runner):
