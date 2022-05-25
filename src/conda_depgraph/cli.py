@@ -28,7 +28,19 @@ def main(*_, **__):
     pass
 
 
-@main.resultcallback()
+# click > 8.1 compatibility.
+# See https://click.palletsprojects.com/en/8.1.x/changes/#version-8-1-0.
+# TODO: once click 8.1.0 is sufficiently old, remove this conditional and just
+#       use main.result_callback, and require at least click 8.1.0 in the recipe.
+if hasattr(main, 'resultcallback'):
+    # click < 8.1.0
+    result_callback = main.resultcallback
+else:
+    # click >= 8.1.0
+    result_callback = main.result_callback
+
+
+@result_callback()
 def process_subcommands(subcommands, from_where, prefix, name, output):
 
     if from_where == 'env':
